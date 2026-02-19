@@ -7,8 +7,8 @@ from .models import User
 import hashlib
 
 def get_password_hash(password):
-    #+++ USE OF BROKEN HASH FUNCTION SHA1 +++
-    return hashlib.sha1(password.encode()).hexdigest()
+    # Use SHA-256 instead of the insecure SHA-1
+    return hashlib.sha256(password.encode()).hexdigest()
 
 def authenticate_user(username,password):
     """
