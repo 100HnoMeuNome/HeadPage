@@ -37,8 +37,8 @@ def user_profile(request):
             pic_url = profile_form.cleaned_data["profile_picture_from_url"]
             new_password = profile_form.cleaned_data["password"]
             if len(pic_url)>0:
-                # +++ VULNERABLE TO RCE (REMOTE CODE EXECUTION) +++
-                subprocess.run( "wget {} -O {}{}{}.jpg".format(pic_url, settings.MEDIA_ROOT,"/avatars/",str(logged_user.id)), shell=True)
+                output_path = os.path.join(settings.MEDIA_ROOT, "avatars", "{}.jpg".format(logged_user.id))
+                subprocess.run(["wget", pic_url, "-O", output_path])
             #File uploaded in the field
             elif request.FILES.get("profile_picture_from_file",None) != None:
                 # +++ VULNERABLE TO Unrestricted Upload of File with Dangerous Type +++
