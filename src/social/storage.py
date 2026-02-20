@@ -9,7 +9,7 @@ def write_file(f,path):
 
 def move_file(old_path,new_path):
     # +++ VULNERABLE TO RCE (REMOTE CODE EXECUTION) +++
-    subprocess.run( "mv {} {} ".format( os.path.join(settings.MEDIA_ROOT,old_path) , os.path.join(settings.MEDIA_ROOT,new_path) ), shell=True)
+    subprocess.run(["mv", os.path.join(settings.MEDIA_ROOT, old_path), os.path.join(settings.MEDIA_ROOT, new_path)])
 
 def delete_file(path):
     # +++ VULNERABLE TO RCE (REMOTE CODE EXECUTION) +++
