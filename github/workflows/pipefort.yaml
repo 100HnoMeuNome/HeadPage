@@ -1,0 +1,22 @@
+name: pipefort
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: raphabot/pipefort@v0.1.0
+        with:
+          path: .
+          ruleset: owasp
+          fail-on: HIGH
+          output: console
