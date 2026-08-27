@@ -117,13 +117,13 @@ def delete_file(request):
     if request.POST and logged_user != None:
         try:
             original_file = File.objects.get(id=request.GET.get("id"),owner=logged_user)
-        except:
+        except File.DoesNotExist:
             #TODO don't return a 404, but a decent error message
             raise Http404("File does not exist")
-        finally:
-            storage.delete_file(original_file.path)
-            original_file.delete()
-            return redirect(reverse("social:profile")+"?userid={}".format(logged_user.id))
+
+        storage.delete_file(original_file.path)
+        original_file.delete()
+        return redirect(reverse("social:profile")+"?userid={}".format(logged_user.id))
 
 def static(request):
     if request.GET:
